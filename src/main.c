@@ -59,6 +59,16 @@ int main (int argc, char *argv[]) {
     exit(1);
   }
 
+  while (1) {
+    struct sockaddr_in client_socket;
+    socklen_t length = sizeof(struct sockaddr);
+    int client = accept(sock, (struct sockaddr *) &client_socket, &length);
+
+    if (client < 0) {
+      continue;
+    }
+  }
+
   return 0;
 
 }
