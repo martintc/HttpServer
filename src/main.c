@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 
+#define BUFFER_SIZE 65536
+
 int get_socket () {
 
   #if __NetBSD__
@@ -20,6 +22,37 @@ void make_server (struct sockaddr_in *server, int port) {
   server->sin_family = AF_INET;
   server->sin_port = htons(port);
   server->sin_addr.s_addr = htonl(INADDR_ANY);
+}
+
+void return_404 (int *client) {
+  char *msg = "HTTP/1.1 404 Not Found";
+  send(*client, msg, strlen(msg), 0);
+}
+
+void handle_client (int *client) {
+  char request[BUFFER_SIZE];
+  ssize_t recv_message = recv(*client, request, BUFFER_SIZE, 0);
+  if (recv_message == -1) {
+    return;
+  }
+
+  char *line = strtok(request, "\n");
+  char *tokens = strtok(line, " ");
+  char *file_path;
+  if (strcmp(tokens, "GET ")) {
+    tokens = strtok(NULL, " ");
+    strcpy(file_path, tokens);
+    printf("%s\n", file_path);
+  }
+}
+
+void close_client (int *sock) {
+  #if __NetBSD__
+  pclose((FILE*) sock);
+  #elif __linux__
+  close((FILE*) sock);
+  #endif
+
 }
 
 int main (int argc, char *argv[]) {
@@ -67,7 +100,13 @@ int main (int argc, char *argv[]) {
     if (client < 0) {
       continue;
     }
+
+    handle_client(&client);
+
+    close_client(&client);
   }
+
+  close(sock);
 
   return 0;
 
