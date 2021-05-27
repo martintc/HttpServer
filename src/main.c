@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include "file_handler.h"
 
 #define BUFFER_SIZE 65536
 
@@ -37,7 +38,7 @@ void return_404 (int *client) {
   send(*client, msg, strlen(msg), 0);
 }
 
-void handle_client (int *client) {
+void handle_client (int *client, char *root_folder) {
   char request[BUFFER_SIZE];
   ssize_t recv_message = recv(*client, request, BUFFER_SIZE, 0);
   if (recv_message == -1) {
@@ -52,6 +53,10 @@ void handle_client (int *client) {
     strcpy(file_path, tokens);
     printf("%s\n", file_path);
   }
+
+  char* requested_path = make_full_path(root_folder, file_path);
+  printf("Does this resource exist: %d\n", check_existence(requested_path));
+  
 }
 
 void close_client (int *sock) {
