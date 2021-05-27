@@ -64,7 +64,7 @@ void close_client (int *sock) {
 }
 
 int main (int argc, char *argv[]) {
-
+  /* First argument is port, second argument is file root for server  */
   int port;
   int status;
   int sock;
