@@ -109,9 +109,9 @@ int main (int argc, char *argv[]) {
       continue;
     }
 
-    handle_client(&client);
+    handle_client(&client, root_folder);
 
-    close_client(&client);
+    //close_client(&client);
   }
 
   close_socket(&sock);
