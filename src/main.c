@@ -18,6 +18,14 @@ int get_socket () {
   #endif
 }
 
+void close_socket (int* sock) {
+  #if __linux__
+  close((FILE *) sock);
+  #elif __NetBSD__
+  pclose((FILE *) sock);
+  #endif
+}
+
 void make_server (struct sockaddr_in *server, int port) {
   server->sin_family = AF_INET;
   server->sin_port = htons(port);
@@ -106,7 +114,7 @@ int main (int argc, char *argv[]) {
     close_client(&client);
   }
 
-  close(sock);
+  close_socket(&sock);
 
   return 0;
 
