@@ -13,7 +13,7 @@ int get_socket () {
 
   #if __NetBSD__
   return socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
-  #elif __linux____
+  #elif __linux__
   return socket(AF_INET, SOCK_STREAM, 6);
   #else
   return -1;
@@ -22,7 +22,8 @@ int get_socket () {
 
 void close_socket (int* sock) {
   #if __linux__
-  close((FILE *) sock);
+  /* close((FILE *) sock); */
+  pclose((FILE *) sock);
   #elif __NetBSD__
   pclose((FILE *) sock);
   #endif
@@ -64,7 +65,7 @@ void close_client (int *sock) {
   #if __NetBSD__
   pclose((FILE*) sock);
   #elif __linux__
-  close((FILE*) sock);
+  pclose((FILE*) sock);
   #endif
 
 }
