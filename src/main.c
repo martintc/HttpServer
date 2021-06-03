@@ -49,7 +49,7 @@ void handle_client (int *client, char *root_folder) {
 
   char *line = strtok(request, "\n");
   char *tokens = strtok(line, " ");
-  char *file_path;
+  char *file_path = NULL;
   if (strcmp(tokens, "GET ")) {
     tokens = strtok(NULL, " ");
     strcpy(file_path, tokens);
@@ -73,7 +73,7 @@ void close_client (int *sock) {
 int main (int argc, char *argv[]) {
   /* First argument is port, second argument is file root for server  */
   int port;
-  int status;
+  // int status; not currently in use
   int sock;
   char *root_folder;
   struct sockaddr_in server_address;

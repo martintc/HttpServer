@@ -7,6 +7,8 @@ struct http_packet* make_http_packet(char* file_path) {
     packet->message_body = "";
     return packet;
   }
+
+  return NULL; // temporary for WIP
 }
 
 struct http_header* make_404_error() {
@@ -22,5 +24,5 @@ struct http_header* make_404_error() {
 }
 
 struct http_header* make_normal_response(char *file_path) {
-  
+  return NULL; // temp for WIP
 }
