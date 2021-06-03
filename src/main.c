@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include "file_handler.h"
+#include "packet_builder.h"
 
 #define BUFFER_SIZE 65536
 
