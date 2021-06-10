@@ -40,9 +40,11 @@ void return_404 (int *client) {
   send(*client, msg, strlen(msg), 0);
 }
 
+
 void handle_client (int *client, char *root_folder) {
   char request[BUFFER_SIZE];
   ssize_t recv_message = recv(*client, request, BUFFER_SIZE, 0);
+  printf("Message: %s\n", request);
   if (recv_message == -1) {
     return;
   }
@@ -52,13 +54,16 @@ void handle_client (int *client, char *root_folder) {
   char *file_path = NULL;
   if (strcmp(tokens, "GET ")) {
     tokens = strtok(NULL, " ");
+    file_path = (char*) malloc(sizeof(tokens));
     strcpy(file_path, tokens);
     printf("%s\n", file_path);
   }
 
   char* requested_path = make_full_path(root_folder, file_path);
   printf("Does this resource exist: %d\n", check_existence(requested_path));
-  
+  if (file_path != NULL) {
+    free(file_path);
+  }
 }
 
 void close_client (int *sock) {
