@@ -36,8 +36,9 @@ void make_server (struct sockaddr_in *server, int port) {
 }
 
 void return_404 (int *client) {
-  char *msg = "HTTP/1.1 404 Not Found";
-  send(*client, msg, strlen(msg), 0);
+  char *msg = "HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\nContent-Length: 32\r\n\r\n<html>Resource not found!</html>";
+  write(*client, msg, strlen(msg));
+  fflush(stdout);
 }
 
 
@@ -61,6 +62,10 @@ void handle_client (int *client, char *root_folder) {
 
   char* requested_path = make_full_path(root_folder, file_path);
   printf("Does this resource exist: %d\n", check_existence(requested_path));
+  if (check_existence(requested_path) == -1) {
+    return_404(client);
+    return;
+  }
   if (file_path != NULL) {
     free(file_path);
   }
