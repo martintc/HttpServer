@@ -14,4 +14,7 @@ int check_existence(char *path);
 
 FILE* get_file(char* path);
 
+// returns the size of the file
+long get_file_size(FILE *f);
+
 #endif
