@@ -19,4 +19,10 @@ FILE* get_file(char* path) {
   return  fopen(path, "r");
 }
 
-
+long get_file_size(FILE* f) {
+  long length;
+  fseek(f, 0 , SEEK_END);
+  length = ftell(f);
+  rewind(f);
+  return length;
+}
