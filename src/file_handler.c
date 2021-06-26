@@ -26,3 +26,10 @@ long int get_file_size(FILE* f) {
   rewind(f);
   return length;
 }
+char* get_file_contents(FILE* f, long int l) {
+  char* contents = malloc(sizeof(char)*l);
+  for (long i = 0; i < l; i++) {
+    contents[i] = fgetc(f);
+  }
+  return contents;
+}
