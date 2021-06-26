@@ -17,6 +17,7 @@ FILE* get_file(char* path);
 // returns the size of the file
 long get_file_size(FILE *f);
 
+// return the contents of a text file
 char* get_file_contents(FILE* f, long int l);
 
 #endif
