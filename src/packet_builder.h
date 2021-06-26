@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "file_handler.h"
 
 struct http_header {
@@ -22,6 +23,6 @@ struct http_packet* make_http_packet(char* file_path);
 
 struct http_header* make_404_error();
 
-struct http_header* make_normal_response(char *file_path);
+char* get_packet_string(struct http_packet* packet);
 
 #endif
