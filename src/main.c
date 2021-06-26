@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,7 +42,6 @@ void return_404 (int *client) {
   fflush(stdout);
 }
 
-
 void handle_client (int *client, char *root_folder) {
   char request[BUFFER_SIZE];
   ssize_t recv_message = recv(*client, request, BUFFER_SIZE, 0);
@@ -62,10 +62,18 @@ void handle_client (int *client, char *root_folder) {
 
   char* requested_path = make_full_path(root_folder, file_path);
   printf("Does this resource exist: %d\n", check_existence(requested_path));
-  if (check_existence(requested_path) == -1) {
-    return_404(client);
-    return;
-  }
+
+  struct http_packet* packet = make_http_packet(requested_path);
+  printf("test\n");
+  char* message = get_packet_string(packet);
+  printf("%s\n", message);
+  write(*client, message, strlen(message));
+  fflush(stdout);
+
+  free(message);
+  free(packet->header);
+  free(packet);
+
   if (file_path != NULL) {
     free(file_path);
   }
