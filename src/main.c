@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include "file_handler.h"
 #include "packet_builder.h"
+#include "packet_parser.h"
 
 #define BUFFER_SIZE 65536
 
@@ -36,12 +37,6 @@ void make_server (struct sockaddr_in *server, int port) {
   server->sin_addr.s_addr = htonl(INADDR_ANY);
 }
 
-void return_404 (int *client) {
-  char *msg = "HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\nContent-Length: 32\r\n\r\n<html>Resource not found!</html>";
-  write(*client, msg, strlen(msg));
-  fflush(stdout);
-}
-
 void handle_client (int *client, char *root_folder) {
   char request[BUFFER_SIZE];
   ssize_t recv_message = recv(*client, request, BUFFER_SIZE, 0);
@@ -49,6 +44,14 @@ void handle_client (int *client, char *root_folder) {
   if (recv_message == -1) {
     return;
   }
+
+  printf("test\n");
+  struct packet_request* r = parse_request(request);
+  printf("%s\n", r->request_method);
+  if (r == NULL) {
+    printf("it is null\n");
+  }
+  printf("test\n");
 
   char *line = strtok(request, "\n");
   char *tokens = strtok(line, " ");
@@ -59,6 +62,8 @@ void handle_client (int *client, char *root_folder) {
     strcpy(file_path, tokens);
     printf("%s\n", file_path);
   }
+
+
 
   char* requested_path = make_full_path(root_folder, file_path);
   printf("Does this resource exist: %d\n", check_existence(requested_path));
