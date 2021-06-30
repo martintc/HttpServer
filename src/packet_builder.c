@@ -59,3 +59,9 @@ struct http_header* make_200_ok (long int length) {
   header->connection_status = "CLOSE";
   return header;
 }
+
+void destroy_http_packet(struct http_packet* h) {
+  free(h->header);
+  h->message_body = "";
+  free(h);
+}

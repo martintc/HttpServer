@@ -14,7 +14,6 @@ struct packet_request* parse_request(char* message) {
     if (line_token == NULL) {
       break;
     }
-    printf("%s\n", line_token);
     if ((strcmp("GET", line_token)) == 0) {
       strcpy(request->request_method, "GET");
       line_token = strtok(NULL, delim);
