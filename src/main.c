@@ -53,18 +53,6 @@ void handle_client (int *client, char *root_folder) {
   }
   printf("test\n");
 
-  /* char *line = strtok(request, "\n"); */
-  /* char *tokens = strtok(line, " "); */
-  /* char *file_path = NULL; */
-  /* if (strcmp(tokens, "GET ")) { */
-  /*   tokens = strtok(NULL, " "); */
-  /*   file_path = (char*) malloc(sizeof(tokens)); */
-  /*   strcpy(file_path, tokens); */
-  /*   printf("%s\n", file_path); */
-  /* } */
-
-
-
   char* requested_path = make_full_path(root_folder, r->request_resource);
   printf("Does this resource exist: %d\n", check_existence(requested_path));
 
