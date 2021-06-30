@@ -45,12 +45,7 @@ void handle_client (int *client, char *root_folder) {
     return;
   }
 
-  printf("test\n");
   struct packet_request* r = parse_request(request);
-  printf("%s\n", r->request_method);
-  if (r == NULL) {
-    printf("it is null\n");
-  }
   printf("test\n");
 
   char* requested_path = make_full_path(root_folder, r->request_resource);
@@ -63,10 +58,12 @@ void handle_client (int *client, char *root_folder) {
   write(*client, message, strlen(message));
   fflush(stdout);
 
+  free(packet->header->content_length);
   free(message);
   free(packet->header);
   free(packet);
   destroy_packet(r);
+  printf("end of comms\n");
 }
 
 void close_client (int *sock) {

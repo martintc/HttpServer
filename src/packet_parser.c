@@ -27,13 +27,13 @@ struct packet_request* parse_request(char* message) {
     line_token = NULL;
   }
 
-
+  printf("parsed\n");
   return request;
 }
 
 void destroy_packet(struct packet_request* packet) {
-  free(&packet->request_method);
-  free(&packet->request_resource);
-  free(&packet->host);
+  free(packet->request_method);
+  free(packet->request_resource);
+  free(packet->host);
   free(packet);
 }
