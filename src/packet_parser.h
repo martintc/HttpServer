@@ -14,4 +14,6 @@ struct packet_request {
 
 struct packet_request* parse_request(char* message);
 
+void destroy_packet(struct packet_request* packet);
+
 #endif
