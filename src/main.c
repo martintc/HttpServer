@@ -57,9 +57,9 @@ void handle_client (int *client, char *root_folder) {
   printf("Does this resource exist: %d\n", check_existence(requested_path));
 
   struct http_packet* packet = make_http_packet(requested_path);
-  printf("test\n");
+  printf("test before making packet message\n");
   char* message = get_packet_string(packet);
-  printf("%s\n", message);
+  printf("Packet to send: %s\n", message);
   write(*client, message, strlen(message));
   fflush(stdout);
 
