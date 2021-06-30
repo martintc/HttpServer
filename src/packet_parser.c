@@ -7,23 +7,21 @@ struct packet_request* parse_request(char* message) {
   request->request_resource = malloc(sizeof(char)*100);
   request->host = malloc(sizeof(char)*32);
 
-  char* nl_delim = "\r\n, ";
-  char* space_delim = " ";
+  char* delim = "\r\n, ";
   char* line_token;
-  char* token;
 
-  for (line_token = strtok(message, nl_delim); ; line_token = strtok(NULL, nl_delim)) {
+  for (line_token = strtok(message, delim); ; line_token = strtok(NULL, delim)) {
     if (line_token == NULL) {
       break;
     }
     printf("%s\n", line_token);
     if ((strcmp("GET", line_token)) == 0) {
       strcpy(request->request_method, "GET");
-      line_token = strtok(NULL, nl_delim);
+      line_token = strtok(NULL, delim);
       strcpy(request->request_resource, line_token);
     }
     if ((strcmp("Host:", line_token)) == 0) {
-      line_token = strtok(NULL, nl_delim);
+      line_token = strtok(NULL, delim);
       strcpy(request->host, line_token);
     }
     line_token = NULL;
