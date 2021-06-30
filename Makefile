@@ -1,4 +1,4 @@
-CC_FLAGS=-Wall
+CC_FLAGS=-Wall -g
 
 compile:
 	make clean
