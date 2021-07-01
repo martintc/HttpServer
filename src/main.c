@@ -115,8 +115,7 @@ int main (int argc, char *argv[]) {
     }
 
     handle_client(&client, root_folder);
-    /* fflush(client); */
-    int t = shutdown(client, 1);
+    shutdown(client, 1);
     close(client);
   }
   close_socket(&sock);
