@@ -12,8 +12,10 @@ struct packet_request {
   char* host;
 };
 
+// parses a packet
 struct packet_request* parse_request(char* message);
 
+// frees the memory in the parsed packet
 void destroy_packet(struct packet_request* packet);
 
 #endif
