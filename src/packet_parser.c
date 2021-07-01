@@ -26,7 +26,6 @@ struct packet_request* parse_request(char* message) {
     line_token = NULL;
   }
 
-  printf("parsed\n");
   return request;
 }
 
