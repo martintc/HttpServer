@@ -40,28 +40,22 @@ void make_server (struct sockaddr_in *server, int port) {
 void handle_client (int *client, char *root_folder) {
   char request[BUFFER_SIZE];
   ssize_t recv_message = recv(*client, request, BUFFER_SIZE, 0);
-  printf("Message: %s\n", request);
   if (recv_message == -1) {
     return;
   }
   struct packet_request* r = parse_request(request);
 
-  printf("test\n");
 
   char* requested_path = make_full_path(root_folder, r->request_resource);
-  printf("Does this resource exist: %d\n", check_existence(requested_path));
 
   struct http_packet* packet = make_http_packet(requested_path);
-  printf("test before making packet message\n");
   char* message = get_packet_string(packet);
-  printf("Packet to send: %s\n", message);
   write(*client, message, strlen(message));
   
   message = "";
   memset(request, 0 ,BUFFER_SIZE);
   destroy_http_packet(packet);
   destroy_packet(r);
-  printf("end of comms\n");
   return;
 }
 
