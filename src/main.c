@@ -44,13 +44,8 @@ void handle_client (int *client, char *root_folder) {
   if (recv_message == -1) {
     return;
   }
-
-  printf("test\n");
   struct packet_request* r = parse_request(request);
-  printf("%s\n", r->request_method);
-  if (r == NULL) {
-    printf("it is null\n");
-  }
+
   printf("test\n");
 
   char* requested_path = make_full_path(root_folder, r->request_resource);
@@ -61,12 +56,13 @@ void handle_client (int *client, char *root_folder) {
   char* message = get_packet_string(packet);
   printf("Packet to send: %s\n", message);
   write(*client, message, strlen(message));
-  fflush(stdout);
-
-  free(message);
-  free(packet->header);
-  free(packet);
+  
+  message = "";
+  memset(request, 0 ,BUFFER_SIZE);
+  destroy_http_packet(packet);
   destroy_packet(r);
+  printf("end of comms\n");
+  return;
 }
 
 void close_client (int *sock) {
@@ -110,7 +106,7 @@ int main (int argc, char *argv[]) {
     exit(1);
   }
 
-  if (listen(sock, 100) < 0) {
+  if ((listen(sock, 100)) < 0) {
     perror("An issue occured in listening....\n");
     exit(1);
   }
@@ -119,16 +115,16 @@ int main (int argc, char *argv[]) {
     struct sockaddr_in client_socket;
     socklen_t length = sizeof(struct sockaddr);
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
-
+    /* fflush(stdout); */
     if (client < 0) {
       continue;
     }
 
     handle_client(&client, root_folder);
-
-    //close_client(&client);
+    /* fflush(client); */
+    int t = shutdown(client, 1);
+    close(client);
   }
-
   close_socket(&sock);
 
   return 0;

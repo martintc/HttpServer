@@ -27,4 +27,6 @@ struct http_header* make_200_ok(long int length);
 
 char* get_packet_string(struct http_packet* packet);
 
+void destroy_http_packet(struct http_packet* h);
+
 #endif
