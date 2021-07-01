@@ -9,9 +9,6 @@ char* make_full_path(char *path, char *file);
 // check is file exists
 int check_existence(char *path);
 
-// return file contens
-//FILE* file_contents(char *path);
-
 FILE* get_file(char* path);
 
 // returns the size of the file
