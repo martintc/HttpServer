@@ -44,8 +44,8 @@ void handle_client (int *client, char *root_folder) {
   if (recv_message == -1) {
     return;
   }
-
   struct packet_request* r = parse_request(request);
+
   printf("test\n");
 
   char* requested_path = make_full_path(root_folder, r->request_resource);
@@ -56,9 +56,7 @@ void handle_client (int *client, char *root_folder) {
   char* message = get_packet_string(packet);
   printf("Packet to send: %s\n", message);
   write(*client, message, strlen(message));
-  /* fflush(stdout); */
-
-  /* free(packet->header->content_length); */
+  
   message = "";
   memset(request, 0 ,BUFFER_SIZE);
   destroy_http_packet(packet);
