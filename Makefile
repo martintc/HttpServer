@@ -7,7 +7,7 @@ compile:
 	mv ./*.o ./build/
 
 link:
-	gcc ./build/*.o -o ./build/server
+	gcc ./build/*.o -o ./build/thttp
 
 clean:
 	rm -rf build
