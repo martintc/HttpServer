@@ -45,6 +45,9 @@ void handle_client (int *client, char *root_folder) {
   }
   struct packet_request* r = parse_request(request);
 
+  if ((strcmp(r->request_resource, "/")) == 0) {
+    r->request_resource = "/index.html";
+  }
 
   char* requested_path = make_full_path(root_folder, r->request_resource);
 
