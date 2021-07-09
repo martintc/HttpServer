@@ -1,4 +1,4 @@
 # TODO
 
-- [x] solve issue with handling multiple requests
-- [] remove test lines that print out output
+- [ ] Return requested image resources
+- [ ] Put socket and client handling in a seperate source file for better readability
