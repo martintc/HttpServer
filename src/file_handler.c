@@ -33,3 +33,8 @@ char* get_file_contents(FILE* f, long int l) {
   }
   return contents;
 }
+
+char* get_file_extension(char* path) {
+  char* token = strpbrk(path, ".");
+  return token++;
+}
