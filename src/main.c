@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
+#include <unistd.h>
 #include "file_handler.h"
 #include "packet_builder.h"
 #include "packet_parser.h"
