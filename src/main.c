@@ -11,8 +11,9 @@
 
 #define BUFFER_SIZE 65536
 
-int get_socket () {
+#define TRUE 1
 
+int get_socket () {
   #if __NetBSD__
   return socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
   #elif __linux__
@@ -108,7 +109,7 @@ int main (int argc, char *argv[]) {
     exit(1);
   }
 
-  while (1) {
+  while (TRUE) {
     struct sockaddr_in client_socket;
     socklen_t length = sizeof(struct sockaddr);
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
