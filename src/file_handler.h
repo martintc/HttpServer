@@ -19,4 +19,6 @@ char* get_file_contents(FILE* f, long int l);
 
 char* get_file_extension(char* path);
 
+char* get_content_type(char* extension);
+
 #endif
