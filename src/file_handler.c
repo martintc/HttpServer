@@ -38,3 +38,17 @@ char* get_file_extension(char* path) {
   char* token = strpbrk(path, ".");
   return token++;
 }
+
+char* get_content_type(char* extension) {
+  if ((strcmp(extension, "html")) == 0) {
+    return "text/html";
+  } else if ((strcmp(extension, "jpeg")) == 0) {
+    return "image/jpeg";
+  } else if ((strcmp(extension, "png")) == 0) {
+    return "image/png";
+  } else if ((strcmp(extension, "gif")) == 0) {
+    return "iamge/gif";
+  } else {
+    return "";
+  }
+}
