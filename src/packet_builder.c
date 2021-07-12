@@ -30,7 +30,8 @@ struct http_packet* make_http_packet(char* file_path) {
   } else {
     FILE* f = get_file(file_path);
     long int length = get_file_size(f);
-    packet->header = make_200_ok(length);
+    char* content_type = get_content_type(get_file_extension(file_path));
+    packet->header = make_200_ok(length, content_type);
     packet->message_body = get_file_contents(f, length);
     return packet;
   }
@@ -47,13 +48,15 @@ struct http_header* make_404_error() {
   return header;
 }
 
-struct http_header* make_200_ok (long int length) {
+struct http_header* make_200_ok (long int length, char* content_type) {
   char length_string[10];
   sprintf(length_string, "%li", length);
   struct http_header* header = malloc(sizeof(struct http_header));
   header->response_code = "HTTP/1.1 200 OK";
   header->server_name = "Todd's HTTP";
-  header->content_type = "text html";
+  /* header->content_type = "text html"; */
+  header->content_type = malloc(sizeof(char)*strlen(content_type));
+  strcpy(header->content_type, content_type);
   header->content_length = malloc(sizeof(char)*strlen(length_string));
   strcpy(header->content_length, length_string);
   header->connection_status = "CLOSE";

@@ -15,7 +15,7 @@ FILE* get_file(char* path);
 long get_file_size(FILE *f);
 
 // return the contents of a text file
-char* get_file_contents(FILE* f, long int l);
+unsigned char* get_file_contents(FILE* f, long int l);
 
 char* get_file_extension(char* path);
 

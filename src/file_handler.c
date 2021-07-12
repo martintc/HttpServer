@@ -16,6 +16,15 @@ int check_existence(char *path) {
 }
 
 FILE* get_file(char* path) {
+  /* if (()) */
+  char* file_ext = get_file_extension(path);
+  char type[4];
+  strcpy(type, get_content_type(file_ext));
+  char delim[] = "/";
+  char* token = strtok(type, delim);
+  if ((strcmp(token, "image")) == 0) {
+    return fopen(path + 1, "rb");
+  }
   return  fopen(path, "r");
 }
 
@@ -26,17 +35,23 @@ long int get_file_size(FILE* f) {
   rewind(f);
   return length;
 }
-char* get_file_contents(FILE* f, long int l) {
-  char* contents = malloc(sizeof(char)*l);
-  for (long i = 0; i < l; i++) {
-    contents[i] = fgetc(f);
-  }
+unsigned char* get_file_contents(FILE* f, long int l) {
+  /* char* contents = malloc(sizeof(char)*l); */
+  /* for (long i = 0; i < l; i++) { */
+  /*   contents[i] = fgetc(f); */
+  /* } */
+  /* return contents; */
+
+  unsigned char* contents = malloc(sizeof(unsigned char)*l);
+  fread(contents, sizeof(unsigned char), l, f);
   return contents;
+
 }
 
 char* get_file_extension(char* path) {
   char* token = strpbrk(path, ".");
-  return token++;
+  ++token;
+  return token;
 }
 
 char* get_content_type(char* extension) {
@@ -52,3 +67,5 @@ char* get_content_type(char* extension) {
     return "";
   }
 }
+
+
