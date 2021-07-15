@@ -21,4 +21,6 @@ char* get_file_extension(char* path);
 
 char* get_content_type(char* extension);
 
+void get_contents(FILE* f, long int length, void* buf);
+
 #endif

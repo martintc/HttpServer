@@ -16,7 +16,9 @@ char* get_packet_string(struct http_packet* packet) {
   strcat(message, "CONNECTION: ");
   strcat(message, packet->header->connection_status);
   strcat(message, "\r\n\r\n");
-  strcat(message, packet->message_body);
+  //strcat(message, packet->message_body);
+  //printf("%d\n", (int) strlen((const char*) packet->message_body));
+  memcpy(message, packet->message_body, atol(packet->header->content_length));
   return message;
 
 }
@@ -32,6 +34,7 @@ struct http_packet* make_http_packet(char* file_path) {
     long int length = get_file_size(f);
     char* content_type = get_content_type(get_file_extension(file_path));
     packet->header = make_200_ok(length, content_type);
+    //packet->message_body = get_file_contents(f, length);
     packet->message_body = get_file_contents(f, length);
     return packet;
   }
@@ -44,7 +47,7 @@ struct http_header* make_404_error() {
   header->server_name = "Todd's HTTP";
   header->content_length = "32";
   header->content_type = "text html";
-  header->connection_status = "CLOSE";
+  header->connection_status = "KEEP-ALIVE";
   return header;
 }
 

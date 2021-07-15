@@ -48,6 +48,11 @@ unsigned char* get_file_contents(FILE* f, long int l) {
 
 }
 
+void get_contents(FILE* f, long int length, void* buf) {
+	buf = malloc(sizeof(char)*length);
+	memcpy(f, buf, length);
+}
+
 char* get_file_extension(char* path) {
   char* token = strpbrk(path, ".");
   ++token;
