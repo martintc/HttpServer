@@ -16,7 +16,7 @@ struct http_header {
 
 struct http_packet {
   struct http_header* header;
-  char* message_body;
+  void* message_body;
 };
 
 // creates a total HTTP packet
