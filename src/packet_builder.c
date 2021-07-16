@@ -16,9 +16,9 @@ char* get_packet_string(struct http_packet* packet) {
   strcat(message, "CONNECTION: ");
   strcat(message, packet->header->connection_status);
   strcat(message, "\r\n\r\n");
-  //strcat(message, packet->message_body);
+  /* strcat(message, packet->message_body); */
   //printf("%d\n", (int) strlen((const char*) packet->message_body));
-  memcpy(message, packet->message_body, atol(packet->header->content_length));
+  //memcpy(message, packet->message_body, atol(packet->header->content_length));
   return message;
 
 }
