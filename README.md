@@ -7,9 +7,8 @@ Targeting HTTP 1.1 spec
 
 ## Roadmap
 - [X] 1.0 release will be able to handle simple text/html files
-- [ ] 2.0 release will be able to handle images
-- [ ] 3.0 release will be able to handle css
-- [ ] 4.0 release will be able to process a config file
+- [ ] 2.0 release will be able to handle image/css files
+- [ ] 3.0 release will be able to process a config file
 
 ## Repository Layout
 * dev is the current unstable development branch, expect broken features

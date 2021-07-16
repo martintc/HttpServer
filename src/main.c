@@ -26,8 +26,8 @@ int get_socket () {
 
 void close_socket (int* sock) {
   #if __linux__
-  /* close((FILE *) sock); */
-  pclose((FILE *) sock);
+  close(*sock);
+  /* pclose((FILE *) sock); */
   #elif __NetBSD__
   pclose((FILE *) sock);
   #endif
@@ -56,7 +56,7 @@ void handle_client (int *client, char *root_folder) {
   struct http_packet* packet = make_http_packet(requested_path);
   char* message = get_packet_string(packet);
   write(*client, message, strlen(message));
-  
+  write(*client, packet->message_body, atol(packet->header->content_length));
   message = "";
   memset(request, 0 ,BUFFER_SIZE);
   destroy_http_packet(packet);
@@ -120,7 +120,7 @@ int main (int argc, char *argv[]) {
     }
 
     handle_client(&client, root_folder);
-    shutdown(client, 1);
+    shutdown(client, 2);
     close_socket(&client);
   }
   close_socket(&sock);

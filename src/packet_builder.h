@@ -16,7 +16,7 @@ struct http_header {
 
 struct http_packet {
   struct http_header* header;
-  char* message_body;
+  void* message_body;
 };
 
 // creates a total HTTP packet
@@ -26,7 +26,7 @@ struct http_packet* make_http_packet(char* file_path);
 struct http_header* make_404_error();
 
 // makes a 200 ok status header
-struct http_header* make_200_ok(long int length);
+struct http_header* make_200_ok(long int length, char* content_type);
 
 // turns the struct representation into a sendable representation
 char* get_packet_string(struct http_packet* packet);
