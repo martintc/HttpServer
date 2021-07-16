@@ -12,7 +12,7 @@ char* make_full_path(char *path, char *file) {
 }
 
 int check_existence(char *path) {
-  return access(path, R_OK);
+  return access(path, R_OK); 
 }
 
 FILE* get_file(char* path) {

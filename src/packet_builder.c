@@ -24,7 +24,7 @@ char* get_packet_string(struct http_packet* packet) {
 }
 
 struct http_packet* make_http_packet(char* file_path) {
-  struct http_packet* packet = (struct http_packet*) malloc(sizeof(struct http_packet));
+  struct http_packet* packet = malloc(sizeof(struct http_packet));
   if (check_existence(file_path) < 0) {
     packet->header = make_404_error();
     packet->message_body = "<html>Resource not found!</html>";
@@ -68,6 +68,7 @@ struct http_header* make_200_ok (long int length, char* content_type) {
 
 void destroy_http_packet(struct http_packet* h) {
   free(h->header);
+  /* free(h->message_body); */
   h->message_body = "";
   free(h);
 }
