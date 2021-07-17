@@ -23,7 +23,7 @@ FILE* get_file(char* path) {
   char delim[] = "/";
   char* token = strtok(type, delim);
   if ((strcmp(token, "image")) == 0) {
-    return fopen(path + 1, "rb");
+    return fopen(path, "rb");
   }
   return  fopen(path, "r");
 }
