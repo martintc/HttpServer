@@ -18,7 +18,7 @@ int check_existence(char *path) {
 FILE* get_file(char* path) {
   /* if (()) */
   char* file_ext = get_file_extension(path);
-  char type[4];
+  char type[11];
   strcpy(type, get_content_type(file_ext));
   char delim[] = "/";
   char* token = strtok(type, delim);
