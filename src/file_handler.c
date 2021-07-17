@@ -69,7 +69,7 @@ char* get_content_type(char* extension) {
   } else if ((strcmp(extension, "png")) == 0) {
     return "image/png";
   } else if ((strcmp(extension, "gif")) == 0) {
-    return "iamge/gif";
+    return "image/gif";
   } else {
     return "";
   }
