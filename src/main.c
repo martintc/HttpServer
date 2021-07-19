@@ -1,4 +1,5 @@
 
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,6 +14,11 @@
 #define BUFFER_SIZE 65536
 
 #define TRUE 1
+#define FALSE 0
+
+void handler(int s) {
+  // do nothing
+}
 
 int get_socket () {
   #if __NetBSD__
@@ -55,8 +61,10 @@ void handle_client (int *client, char *root_folder) {
 
   struct http_packet* packet = make_http_packet(requested_path);
   char* message = get_packet_string(packet);
-  write(*client, message, strlen(message));
-  write(*client, packet->message_body, atol(packet->header->content_length));
+  //write(*client, message, strlen(message));
+  //write(*client, packet->message_body, atol(packet->header->content_length));
+  send(*client, message, strlen(message), MSG_NOSIGNAL);
+  send(*client, packet->message_body, atol(packet->header->content_length), MSG_NOSIGNAL);
   message = "";
   memset(request, 0 ,BUFFER_SIZE);
   destroy_http_packet(packet);
@@ -109,6 +117,9 @@ int main (int argc, char *argv[]) {
     perror("An issue occured in listening....\n");
     exit(1);
   }
+
+  // implement signal handler
+  signal(SIGPIPE, handler);
 
   while (TRUE) {
     struct sockaddr_in client_socket;
