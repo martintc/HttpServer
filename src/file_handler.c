@@ -23,10 +23,8 @@ FILE* get_file(char* path) {
   char delim[] = "/";
   char* token = strtok(type, delim);
   if ((strcmp(token, "image")) == 0) {
-    free(file_ext);
     return fopen(path, "rb");
   }
-  free(file_ext);
   return  fopen(path, "r");
 }
 
@@ -62,18 +60,18 @@ char* get_file_extension(char* path) {
 }
 
 char* get_content_type(char* extension) {
-  if ((strcmp(extension, "html")) == 0) {
+  if (strcmp(extension, "html") == 0) {
     return "text/html";
-  } else if ((strcmp(extension, "css")) == 0) {
+  } else if (strcmp(extension, "css") == 0) {
     return "text/css";
-  } else if ((strcmp(extension, "jpeg")) == 0) {
+  } else if (strcmp(extension, "jpeg") == 0) {
     return "image/jpeg";
-  } else if ((strcmp(extension, "png")) == 0) {
+  } else if (strcmp(extension, "png") == 0) {
     return "image/png";
-  } else if ((strcmp(extension, "gif")) == 0) {
+  } else if (strcmp(extension, "gif") == 0) {
     return "image/gif";
   } else {
-    return "";
+    return NULL;
   }
 }
 
