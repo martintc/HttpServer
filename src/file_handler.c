@@ -5,7 +5,8 @@
 #include "file_handler.h"
 
 char* make_full_path(char *path, char *file) {
-  char *full_path = malloc(sizeof(path) + sizeof(file) + 1);
+  char *full_path = malloc(strlen(path) + strlen(file) + 2);
+  full_path[0] = '\0';
   strcat(full_path, path);
   strcat(full_path, file);
   return full_path;
@@ -22,7 +23,7 @@ FILE* get_file(char* path) {
   strcpy(type, get_content_type(file_ext));
   char delim[] = "/";
   char* token = strtok(type, delim);
-  if ((strcmp(token, "image")) == 0) {
+  if (strcmp(token, "image") == 0) {
     return fopen(path, "rb");
   }
   return  fopen(path, "r");
