@@ -30,8 +30,11 @@ struct packet_request* parse_request(char* message) {
 }
 
 void destroy_packet(struct packet_request* packet) {
-  packet->request_method = NULL;
-  packet->request_resource = NULL;
-  packet->host = NULL;
+  /* packet->request_method = NULL; */
+  /* packet->request_resource = NULL; */
+  /* packet->host = NULL; */
+  free(packet->request_method);
+  /* free(packet->request_resource); */
+  free(packet->host);
   free(packet);
 }

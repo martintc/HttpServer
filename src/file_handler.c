@@ -20,7 +20,7 @@ FILE* get_file(char* path) {
   /* if (()) */
   char* file_ext = get_file_extension(path);
   char type[11];
-  strcpy(type, get_content_type(file_ext));
+  strcat(type, get_content_type(file_ext));
   char delim[] = "/";
   char* token = strtok(type, delim);
   if (strcmp(token, "image") == 0) {

@@ -69,8 +69,9 @@ struct http_header* make_200_ok (long int length, char* content_type) {
 }
 
 void destroy_http_packet(struct http_packet* h) {
+  /* free(h->header->content_length); */
+  /* free(h->header->content_type); */
   free(h->header);
   /* free(h->message_body); */
-  h->message_body = "";
   free(h);
 }
