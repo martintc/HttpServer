@@ -58,10 +58,12 @@ struct http_header* make_200_ok (long int length, char* content_type) {
   header->response_code = "HTTP/1.1 200 OK";
   header->server_name = "Todd's HTTP";
   /* header->content_type = "text html"; */
-  header->content_type = malloc(sizeof(char)*strlen(content_type));
-  strcpy(header->content_type, content_type);
-  header->content_length = malloc(sizeof(char)*strlen(length_string));
-  strcpy(header->content_length, length_string);
+  header->content_type = malloc(strlen(content_type)+1);
+  header->content_type[0] = '\0';
+  strcat(header->content_type, content_type);
+  header->content_length = malloc(strlen(length_string)+1);
+  header->content_length[0] = '\0';
+  strcat(header->content_length, length_string);
   header->connection_status = "CLOSE";
   return header;
 }
