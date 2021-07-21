@@ -61,19 +61,21 @@ char* get_file_extension(char* path) {
 }
 
 char* get_content_type(char* extension) {
+  static char value[15];
   if (strcmp(extension, "html") == 0) {
-    return "text/html";
+    strcpy(value, "text/html");
   } else if (strcmp(extension, "css") == 0) {
-    return "text/css";
+    strcpy(value, "text/css");
   } else if (strcmp(extension, "jpeg") == 0) {
-    return "image/jpeg";
+    strcpy(value, "image/jpeg");
   } else if (strcmp(extension, "png") == 0) {
-    return "image/png";
+    strcpy(value, "image/png");
   } else if (strcmp(extension, "gif") == 0) {
-    return "image/gif";
+    strcpy(value, "image/gif");
   } else {
-    return NULL;
+    // do nothing
   }
+  return value;
 }
 
 
