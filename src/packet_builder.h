@@ -7,11 +7,11 @@
 #include "file_handler.h"
 
 struct http_header {
-  char* response_code;
-  char* server_name;
-  char* content_length; // length of body
-  char* content_type;
-  char* connection_status;
+  char response_code[32];
+  char server_name[32];
+  char content_length[8]; // length of body
+  char content_type[16];
+  char connection_status[16];
 };
 
 struct http_packet {
