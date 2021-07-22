@@ -34,6 +34,7 @@ struct http_packet* make_http_packet(char* file_path) {
     packet->header = make_200_ok(length, content_type);
     //packet->message_body = get_file_contents(f, length);
     packet->message_body = get_file_contents(f, length);
+    fclose(f);
     return packet;
   }
   return NULL; // temporary for WIP
