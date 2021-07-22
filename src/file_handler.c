@@ -5,8 +5,10 @@
 #include "file_handler.h"
 
 char* make_full_path(char *path, char *file) {
-  char *full_path = malloc(sizeof(path) + sizeof(file) + 1);
-  strcat(full_path, path);
+  char *full_path = malloc(strlen(path) + strlen(file) + 2);
+  full_path[0] = '\0';
+  /* char full_path[strlen(path) + strlen(file) + 1]; */
+  strcpy(full_path, path);
   strcat(full_path, file);
   return full_path;
 }
@@ -19,14 +21,12 @@ FILE* get_file(char* path) {
   /* if (()) */
   char* file_ext = get_file_extension(path);
   char type[11];
-  strcpy(type, get_content_type(file_ext));
+  strcat(type, get_content_type(file_ext));
   char delim[] = "/";
   char* token = strtok(type, delim);
-  if ((strcmp(token, "image")) == 0) {
-    free(file_ext);
+  if (strcmp(token, "image") == 0) {
     return fopen(path, "rb");
   }
-  free(file_ext);
   return  fopen(path, "r");
 }
 
@@ -62,19 +62,21 @@ char* get_file_extension(char* path) {
 }
 
 char* get_content_type(char* extension) {
-  if ((strcmp(extension, "html")) == 0) {
-    return "text/html";
-  } else if ((strcmp(extension, "css")) == 0) {
-    return "text/css";
-  } else if ((strcmp(extension, "jpeg")) == 0) {
-    return "image/jpeg";
-  } else if ((strcmp(extension, "png")) == 0) {
-    return "image/png";
-  } else if ((strcmp(extension, "gif")) == 0) {
-    return "image/gif";
+  static char value[15];
+  if (strcmp(extension, "html") == 0) {
+    strcpy(value, "text/html");
+  } else if (strcmp(extension, "css") == 0) {
+    strcpy(value, "text/css");
+  } else if (strcmp(extension, "jpeg") == 0) {
+    strcpy(value, "image/jpeg");
+  } else if (strcmp(extension, "png") == 0) {
+    strcpy(value, "image/png");
+  } else if (strcmp(extension, "gif") == 0) {
+    strcpy(value, "image/gif");
   } else {
-    return "";
+    // do nothing
   }
+  return value;
 }
 
 

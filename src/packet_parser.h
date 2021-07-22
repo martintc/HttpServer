@@ -7,9 +7,9 @@
 #include <stdlib.h>
 
 struct packet_request {
-  char* request_method;
-  char* request_resource;
-  char* host;
+  char request_method[8];
+  char request_resource[256];
+  char host[32];
 };
 
 // parses a packet
