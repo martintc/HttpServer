@@ -54,7 +54,7 @@ void handle_client (int *client, char *root_folder) {
   struct packet_request* r = parse_request(request);
 
   if ((strcmp(r->request_resource, "/")) == 0) {
-    r->request_resource = "/index.html";
+    strcpy(r->request_resource, "/index.html");
   }
 
   char* requested_path = make_full_path(root_folder, r->request_resource);
@@ -65,6 +65,7 @@ void handle_client (int *client, char *root_folder) {
   //write(*client, packet->message_body, atol(packet->header->content_length));
   send(*client, message, strlen(message), MSG_NOSIGNAL);
   send(*client, packet->message_body, atol(packet->header->content_length), MSG_NOSIGNAL);
+  free(requested_path);
   free(message);
   memset(request, 0 ,BUFFER_SIZE);
   destroy_http_packet(packet);

@@ -7,7 +7,8 @@
 char* make_full_path(char *path, char *file) {
   char *full_path = malloc(strlen(path) + strlen(file) + 2);
   full_path[0] = '\0';
-  strcat(full_path, path);
+  /* char full_path[strlen(path) + strlen(file) + 1]; */
+  strcpy(full_path, path);
   strcat(full_path, file);
   return full_path;
 }
