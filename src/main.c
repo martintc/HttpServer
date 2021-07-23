@@ -114,12 +114,10 @@ int main (int argc, char *argv[]) {
 
   // implement signal handler
   signal(SIGPIPE, handler);
-  printf("hello\n");
 
   while (TRUE) {
     struct sockaddr_in client_socket;
     socklen_t length = sizeof(struct sockaddr);
-    printf("waiting for clinet");
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
     /* fflush(stdout); */
     if (client < 0) {
@@ -129,7 +127,6 @@ int main (int argc, char *argv[]) {
     handle_client(&client, root_folder);
     shutdown(client, SHUT_RDWR);
     close(client);
-    printf("read for new client\n");
   }
   close(sock);
 
