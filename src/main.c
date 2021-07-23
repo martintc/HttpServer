@@ -127,6 +127,7 @@ int main (int argc, char *argv[]) {
     handle_client(&client, root_folder);
     shutdown(client, SHUT_RDWR);
     close(client);
+    printf("read for new client\n");
   }
   close(sock);
 
