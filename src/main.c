@@ -114,6 +114,7 @@ int main (int argc, char *argv[]) {
 
   // implement signal handler
   signal(SIGPIPE, handler);
+  printf("hello\n");
 
   while (TRUE) {
     struct sockaddr_in client_socket;
