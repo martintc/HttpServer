@@ -124,7 +124,7 @@ int main (int argc, char *argv[]) {
     }
 
     handle_client(&client, root_folder);
-    shutdown(client, SHUT_WR);
+    shutdown(client, SHUT_RDWR);
     close_socket(&client);
   }
   close_socket(&sock);
