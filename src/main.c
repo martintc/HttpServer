@@ -11,7 +11,7 @@
 #include "packet_builder.h"
 #include "packet_parser.h"
 
-#define BUFFER_SIZE 65536
+#define BUFFER_SIZE 8192
 
 #define TRUE 1
 #define FALSE 0
@@ -61,25 +61,23 @@ void handle_client (int *client, char *root_folder) {
 
   struct http_packet* packet = make_http_packet(requested_path);
   char* message = get_packet_string(packet);
-  //write(*client, message, strlen(message));
-  //write(*client, packet->message_body, atol(packet->header->content_length));
-  send(*client, message, strlen(message), MSG_NOSIGNAL);
-  send(*client, packet->message_body, atol(packet->header->content_length), MSG_NOSIGNAL);
+  /* write(*client, message, sizeof(message)+1); */
+  /* write(*client, packet->message_body, atol(packet->content_length)); */
+  send(*client, message, strlen(message), 0);
+  send(*client, packet->message_body, atol(packet->header->content_length), 0);
+  /* printf("%s\n", message); */
+  /* printf("%s\n", packet->message_body); */
+  /* printf("%s\n", (char *) packet->message_body); */
+  printf("---------------------------------\n");
   free(requested_path);
+  memset(request, 0 , BUFFER_SIZE);
+  memset(message, 0, strlen(message));
+  memset(packet->message_body, 0, atol(packet->header->content_length));
   free(message);
-  memset(request, 0 ,BUFFER_SIZE);
   destroy_http_packet(packet);
   destroy_packet(r);
+  /* printf("%s\n", message); */
   return;
-}
-
-void close_client (int *sock) {
-  #if __NetBSD__
-  pclose((FILE*) sock);
-  #elif __linux__
-  pclose((FILE*) sock);
-  #endif
-
 }
 
 int main (int argc, char *argv[]) {
@@ -132,7 +130,7 @@ int main (int argc, char *argv[]) {
     }
 
     handle_client(&client, root_folder);
-    shutdown(client, 2);
+    shutdown(client, SHUT_WR);
     close_socket(&client);
   }
   close_socket(&sock);

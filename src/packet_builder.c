@@ -1,7 +1,9 @@
 #include "packet_builder.h"
+#include "file_handler.h"
 
 char* get_packet_string(struct http_packet* packet) {
-  char* message = (char*) malloc(sizeof(char) * 30000);
+  char* message = malloc(sizeof(char) * 8192);
+  message[0] = '\0';
   strcat(message, packet->header->response_code);
   strcat(message, "\r\n");
   strcat(message, "SERVER: ");
@@ -16,6 +18,7 @@ char* get_packet_string(struct http_packet* packet) {
   strcat(message, "CONNECTION: ");
   strcat(message, packet->header->connection_status);
   strcat(message, "\r\n\r\n");
+  /* strcat(message, (char*) packet->message_body); */
   return message;
 
 }
@@ -46,7 +49,7 @@ struct http_header* make_404_error() {
   strcpy(header->server_name, "Todd's HTTP");
   strcpy(header->content_length, "32");
   strcpy(header->content_type, "text/html");
-  strcpy(header->connection_status, "KEEP-ALIVE");
+  strcpy(header->connection_status, "CLOSE");
   return header;
 }
 
