@@ -115,7 +115,7 @@ int main (int argc, char *argv[]) {
   signal(SIGPIPE, handler);
 
   while (TRUE) {
-    struct sockaddr_in* client_socket = malloc(sizeof(struct sockaddr_in));
+    struct sockaddr_in* client_socket = malloc(sizeof * client_socket);
     socklen_t length = sizeof(struct sockaddr);
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
     /* fflush(stdout); */
