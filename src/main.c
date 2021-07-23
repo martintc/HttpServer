@@ -115,7 +115,7 @@ int main (int argc, char *argv[]) {
   signal(SIGPIPE, handler);
 
   while (TRUE) {
-    struct sockaddr_in client_socket;
+    struct sockaddr_in* client_socket = malloc(sizeof(struct sockaddr_in));
     socklen_t length = sizeof(struct sockaddr);
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
     /* fflush(stdout); */
@@ -124,10 +124,11 @@ int main (int argc, char *argv[]) {
     }
 
     handle_client(&client, root_folder);
+    free(client_socket);
     shutdown(client, SHUT_RDWR);
-    close_socket(&client);
+    close(client);
   }
-  close_socket(&sock);
+  close(sock);
 
   return 0;
 
