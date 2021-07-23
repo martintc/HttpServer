@@ -65,10 +65,6 @@ void handle_client (int *client, char *root_folder) {
   /* write(*client, packet->message_body, atol(packet->content_length)); */
   send(*client, message, strlen(message), 0);
   send(*client, packet->message_body, atol(packet->header->content_length), 0);
-  /* printf("%s\n", message); */
-  /* printf("%s\n", packet->message_body); */
-  /* printf("%s\n", (char *) packet->message_body); */
-  printf("---------------------------------\n");
   free(requested_path);
   memset(request, 0 , BUFFER_SIZE);
   memset(message, 0, strlen(message));
@@ -76,8 +72,6 @@ void handle_client (int *client, char *root_folder) {
   free(message);
   destroy_http_packet(packet);
   destroy_packet(r);
-  /* printf("%s\n", message); */
-  return;
 }
 
 int main (int argc, char *argv[]) {
