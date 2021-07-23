@@ -118,6 +118,7 @@ int main (int argc, char *argv[]) {
   while (TRUE) {
     struct sockaddr_in client_socket;
     socklen_t length = sizeof(struct sockaddr);
+    printf("waiting for clinet");
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
     /* fflush(stdout); */
     if (client < 0) {
