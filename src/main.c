@@ -72,6 +72,7 @@ void handle_client (int *client, char *root_folder) {
   free(message);
   destroy_http_packet(packet);
   destroy_packet(r);
+  return;
 }
 
 int main (int argc, char *argv[]) {
@@ -115,7 +116,7 @@ int main (int argc, char *argv[]) {
   signal(SIGPIPE, handler);
 
   while (TRUE) {
-    struct sockaddr_in* client_socket = malloc(sizeof * client_socket);
+    struct sockaddr_in client_socket;
     socklen_t length = sizeof(struct sockaddr);
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
     /* fflush(stdout); */
@@ -124,9 +125,8 @@ int main (int argc, char *argv[]) {
     }
 
     handle_client(&client, root_folder);
-    /* shutdown(client, SHUT_RDWR); */
+    shutdown(client, SHUT_RDWR);
     close(client);
-    free(client_socket);
   }
   close(sock);
 
