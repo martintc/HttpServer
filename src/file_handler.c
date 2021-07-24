@@ -5,6 +5,8 @@
 #include "file_handler.h"
 
 char* make_full_path(char *path, char *file) {
+  printf("%ld\n", strlen(path));
+  printf("%ld\n", strlen(file));
   char *full_path = malloc(strlen(path) + strlen(file) + 2);
   full_path[0] = '\0';
   /* char full_path[strlen(path) + strlen(file) + 1]; */
