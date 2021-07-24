@@ -65,13 +65,15 @@ void handle_client (int *client, char *root_folder) {
   /* write(*client, packet->message_body, atol(packet->content_length)); */
   send(*client, message, strlen(message), 0);
   send(*client, packet->message_body, atol(packet->header->content_length), 0);
-  free(requested_path);
   memset(request, 0 , BUFFER_SIZE);
   memset(message, 0, strlen(message));
   memset(packet->message_body, 0, atol(packet->header->content_length));
   free(message);
+  message = NULL;
   destroy_http_packet(packet);
   destroy_packet(r);
+  free(requested_path);
+  requested_path = NULL;
   return;
 }
 
