@@ -121,6 +121,7 @@ int main (int argc, char *argv[]) {
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
     /* fflush(stdout); */
     if (client < 0) {
+      close(client);
       continue;
     }
 
