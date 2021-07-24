@@ -57,10 +57,8 @@ void handle_client (int *client, char *root_folder) {
     strcpy(r->request_resource, "/index.html");
   }
 
-  //char* requested_path = make_full_path(root_folder, r->request_resource);
-  char requested_path[256];
-  printf("%li\n", strlen(make_full_path(root_folder, r->request_resource)));
-  strcpy(requested_path, make_full_path(root_folder, r->request_resource));
+  char* requested_path = make_full_path(root_folder, r->request_resource);
+
 
   struct http_packet* packet = make_http_packet(requested_path);
   char* message = get_packet_string(packet);
@@ -75,8 +73,8 @@ void handle_client (int *client, char *root_folder) {
   message = NULL;
   destroy_http_packet(packet);
   destroy_packet(r);
-  /* free(requested_path); */
-  /* requested_path = NULL; */
+  free(requested_path);
+  requested_path = NULL;
   return;
 }
 

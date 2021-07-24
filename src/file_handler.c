@@ -7,7 +7,7 @@
 char* make_full_path(char *path, char *file) {
   const size_t len1 = strlen(path);
   const size_t len2 = strlen(file);
-  char *full_path = malloc(strlen(path) + strlen(file) + 1);
+  char* full_path = malloc(sizeof(char) * 128);
   full_path[0] = '\0';
   /* char full_path[strlen(path) + strlen(file) + 1]; */
   /* strcpy(full_path, path); */
