@@ -58,17 +58,17 @@ void handle_client (int *client, char *root_folder) {
   }
 
   char* requested_path = make_full_path(root_folder, r->request_resource);
-  printf("1\n");
+  //printf("1\n");
 
   struct http_packet* packet = make_http_packet(requested_path);
   char* message = get_packet_string(packet);
   /* write(*client, message, sizeof(message)+1); */
   /* write(*client, packet->message_body, atol(packet->content_length)); */
-  printf("2\n");
+  //printf("2\n");
   send(*client, message, strlen(message), 0);
-  printf("3\n");
+  //printf("3\n");
   send(*client, packet->message_body, atol(packet->header->content_length), 0);
-  printf("4\n");
+  //printf("4\n");
   memset(request, 0 , BUFFER_SIZE);
   memset(message, 0, strlen(message));
   memset(packet->message_body, 0, atol(packet->header->content_length));
@@ -77,7 +77,7 @@ void handle_client (int *client, char *root_folder) {
   destroy_http_packet(packet);
   destroy_packet(r);
   free(requested_path);
-  printf("5\n");
+  //printf("5\n");
   return;
 }
 
@@ -124,7 +124,7 @@ int main (int argc, char *argv[]) {
   while (TRUE) {
     struct sockaddr_in client_socket;
     socklen_t length = sizeof(struct sockaddr);
-    printf("waiting on client\n");
+    //printf("waiting on client\n");
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
     /* fflush(stdout); */
     if (client < 0) {
@@ -132,12 +132,12 @@ int main (int argc, char *argv[]) {
       close(client);
       continue;
     }
-    printf("CLient connected\n");
+    //printf("CLient connected\n");
     handle_client(&client, root_folder);
-    printf("client handled\n");
+    //printf("client handled\n");
     shutdown(client, SHUT_RDWR);
     close(client);
-    printf("client closed\n ----------------------------------\n");
+    //printf("client closed\n ----------------------------------\n");
   }
   close(sock);
 
