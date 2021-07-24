@@ -74,7 +74,6 @@ void handle_client (int *client, char *root_folder) {
   destroy_http_packet(packet);
   destroy_packet(r);
   free(requested_path);
-  requested_path = NULL;
   return;
 }
 

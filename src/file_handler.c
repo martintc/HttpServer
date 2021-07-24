@@ -10,10 +10,10 @@ char* make_full_path(char *path, char *file) {
   char* full_path = malloc(sizeof(char) * 128);
   full_path[0] = '\0';
   /* char full_path[strlen(path) + strlen(file) + 1]; */
-  /* strcpy(full_path, path); */
-  /* strcat(full_path, file); */
-  memcpy(full_path, path, len1);
-  memcpy(full_path + len1, file, len2);
+  strcpy(full_path, path);
+  strcat(full_path, file);
+  /* memcpy(full_path, path, len1); */
+  /* memcpy(full_path + len1, file, len2); */
   return full_path;
 }
 
