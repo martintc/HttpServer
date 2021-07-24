@@ -5,13 +5,15 @@
 #include "file_handler.h"
 
 char* make_full_path(char *path, char *file) {
+  const size_t len1 = strlen(path);
+  const size_t len2 = strlen(file);
   char *full_path = malloc(strlen(path) + strlen(file) + 1);
   full_path[0] = '\0';
   /* char full_path[strlen(path) + strlen(file) + 1]; */
   /* strcpy(full_path, path); */
   /* strcat(full_path, file); */
-  memcpy(full_path, path, strlen(path));
-  memcpy(full_path+strlen(path), file, strlen(file));
+  memcpy(full_path, path, len1);
+  memcpy(full_path + len1, file, len2);
   return full_path;
 }
 
