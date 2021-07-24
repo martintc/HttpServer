@@ -59,6 +59,7 @@ void handle_client (int *client, char *root_folder) {
 
   //char* requested_path = make_full_path(root_folder, r->request_resource);
   char requested_path[256];
+  printf("%li\n", strlen(make_full_path(root_folder, r->request_resource)));
   strcpy(requested_path, make_full_path(root_folder, r->request_resource));
 
   struct http_packet* packet = make_http_packet(requested_path);
