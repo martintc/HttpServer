@@ -130,7 +130,7 @@ int main (int argc, char *argv[]) {
     }
     printf("CLient connected\n");
     handle_client(&client, root_folder);
-    printf("client handled\n";)
+    printf("client handled\n");
     shutdown(client, SHUT_RDWR);
     close(client);
     printf("client closed\n ----------------------------------\n");
