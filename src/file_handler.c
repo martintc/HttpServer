@@ -5,15 +5,10 @@
 #include "file_handler.h"
 
 char* make_full_path(char *path, char *file) {
-  const size_t len1 = strlen(path);
-  const size_t len2 = strlen(file);
   char* full_path = malloc(sizeof(char) * 128);
   full_path[0] = '\0';
-  /* char full_path[strlen(path) + strlen(file) + 1]; */
   strcpy(full_path, path);
   strcat(full_path, file);
-  /* memcpy(full_path, path, len1); */
-  /* memcpy(full_path + len1, file, len2); */
   return full_path;
 }
 
@@ -22,7 +17,6 @@ int check_existence(char *path) {
 }
 
 FILE* get_file(char* path) {
-  /* if (()) */
   char* file_ext = get_file_extension(path);
   char type[11];
   strcat(type, get_content_type(file_ext));
@@ -42,12 +36,6 @@ long int get_file_size(FILE* f) {
   return length;
 }
 unsigned char* get_file_contents(FILE* f, long int l) {
-  /* char* contents = malloc(sizeof(char)*l); */
-  /* for (long i = 0; i < l; i++) { */
-  /*   contents[i] = fgetc(f); */
-  /* } */
-  /* return contents; */
-
   unsigned char* contents = malloc(sizeof(unsigned char)*l);
   fread(contents, sizeof(unsigned char), l, f);
   return contents;

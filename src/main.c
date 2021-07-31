@@ -62,13 +62,8 @@ void handle_client (int *client, char *root_folder) {
 
   struct http_packet* packet = make_http_packet(requested_path);
   char* message = get_packet_string(packet);
-  /* write(*client, message, sizeof(message)+1); */
-  /* write(*client, packet->message_body, atol(packet->content_length)); */
-  //printf("2\n");
   send(*client, message, strlen(message), 0);
-  //printf("3\n");
   send(*client, packet->message_body, atol(packet->header->content_length), 0);
-  //printf("4\n");
   memset(request, 0 , BUFFER_SIZE);
   memset(message, 0, strlen(message));
   memset(packet->message_body, 0, atol(packet->header->content_length));
@@ -77,7 +72,6 @@ void handle_client (int *client, char *root_folder) {
   destroy_http_packet(packet);
   destroy_packet(r);
   free(requested_path);
-  //printf("5\n");
   return;
 }
 
