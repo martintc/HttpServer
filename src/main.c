@@ -10,6 +10,7 @@
 #include "file_handler.h"
 #include "packet_builder.h"
 #include "packet_parser.h"
+#include "log.h"
 
 #define BUFFER_SIZE 8192
 
@@ -76,6 +77,10 @@ void handle_client (int *client, char *root_folder) {
 }
 
 int main (int argc, char *argv[]) {
+
+  // log file path on server
+  char* path = "/home/todd/log.txt";
+
   /* First argument is port, second argument is file root for server  */
   int port;
   // int status; not currently in use
@@ -115,25 +120,26 @@ int main (int argc, char *argv[]) {
   // implement signal handler
   signal(SIGPIPE, handler);
 
+  // open log file
+  FILE* log = open_log(path);
+
   while (TRUE) {
     struct sockaddr_in client_socket;
     socklen_t length = sizeof(struct sockaddr);
-    //printf("waiting on client\n");
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
-    /* fflush(stdout); */
     if (client < 0) {
-      printf("client error\n");
+      write_to_log(log, "Error for client connecting");
       close(client);
       continue;
     }
-    //printf("CLient connected\n");
+    write_to_log(log, "Client connected");
     handle_client(&client, root_folder);
-    //printf("client handled\n");
     shutdown(client, SHUT_RDWR);
     close(client);
-    //printf("client closed\n ----------------------------------\n");
+    write_to_log(log, "Client has been handled");
   }
   close(sock);
+  close_file(log);
 
   return 0;
 
