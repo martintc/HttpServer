@@ -3,14 +3,18 @@
 FILE* open_log(char* path) {
   FILE* f = fopen(path, "rw");
   if (f == NULL) {
-    println("Error in opening log file\n");
+    printf("Error in opening log file\n");
     return NULL;
   }
   return f;
 }
 
 void write_to_log(FILE* f, char* line) {
-  if(fprintf(f, "%s\n", line) < 0) {
+
+  time_t curtime;
+  time(&curtime);
+
+  if(fprintf(f, "%s %s %s\n",ctime(&curtime), "-", line) < 0) {
     printf("Error writing to log\n");
   }
 }
