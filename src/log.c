@@ -1,7 +1,7 @@
 #include "log.h"
 
 FILE* open_log(char* path) {
-  FILE* f = fopen(path, "rw");
+  FILE* f = fopen(path, "w");
   if (f == NULL) {
     printf("Error in opening log file\n");
     return NULL;
