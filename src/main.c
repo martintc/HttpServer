@@ -79,7 +79,7 @@ void handle_client (int *client, char *root_folder) {
 int main (int argc, char *argv[]) {
 
   // log file path on server
-  char* path = "/home/todd/log.txt";
+  char* path = "log.txt";
 
   /* First argument is port, second argument is file root for server  */
   int port;
