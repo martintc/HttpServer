@@ -9,6 +9,15 @@ FILE* open_log(char* path) {
   return f;
 }
 
+FILE* open_append_log(char* path) {
+  FILE* f = fopen(path, "a");
+  if (f == NULL) {
+    printf("Error is apending log file\n");
+    return NULL;
+  }
+  return f;
+}
+
 void write_to_log(FILE* f, char* line) {
 
   time_t curtime;

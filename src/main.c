@@ -121,9 +121,10 @@ int main (int argc, char *argv[]) {
   signal(SIGPIPE, handler);
 
   // open log file
-  FILE* log = open_log(path);
+  //FILE* log = open_log(path);
 
   while (TRUE) {
+    FILE* log = open_append_log(path);
     struct sockaddr_in client_socket;
     socklen_t length = sizeof(struct sockaddr);
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
@@ -137,9 +138,10 @@ int main (int argc, char *argv[]) {
     shutdown(client, SHUT_RDWR);
     close(client);
     write_to_log(log, "Client has been handled");
+    close_file(log);
   }
   close(sock);
-  close_file(log);
+  /* close_file(log); */
 
   return 0;
 
