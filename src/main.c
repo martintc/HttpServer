@@ -46,7 +46,7 @@ void make_server (struct sockaddr_in *server, int port) {
   server->sin_addr.s_addr = htonl(INADDR_ANY);
 }
 
-void handle_client (int *client, char *root_folder) {
+void handle_client (int *client, char *root_folder, FILE* log) {
   char request[BUFFER_SIZE];
   ssize_t recv_message = recv(*client, request, BUFFER_SIZE, 0);
   if (recv_message == -1) {
@@ -57,7 +57,7 @@ void handle_client (int *client, char *root_folder) {
   if ((strcmp(r->request_resource, "/")) == 0) {
     strcpy(r->request_resource, "/index.html");
   }
-
+  write_to_log(log, r->request_resource);
   char* requested_path = make_full_path(root_folder, r->request_resource);
   //printf("1\n");
 
@@ -134,7 +134,7 @@ int main (int argc, char *argv[]) {
       continue;
     }
     write_to_log(log, "Client connected");
-    handle_client(&client, root_folder);
+    handle_client(&client, root_folder, log);
     shutdown(client, SHUT_RDWR);
     close(client);
     write_to_log(log, "Client has been handled");
