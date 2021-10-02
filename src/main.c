@@ -53,7 +53,7 @@ void handle_client (int *client, char *root_folder, FILE* log) {
     return;
   }
   struct packet_request* r = parse_request(request);
-
+  printf("Reuested resource: %s", r->request_resource); // test line of code
   if ((strcmp(r->request_resource, "/")) == 0) {
     strcpy(r->request_resource, "/index.html");
   }
