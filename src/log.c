@@ -23,7 +23,7 @@ void write_to_log(FILE* f, char* line) {
   time_t curtime;
   time(&curtime);
 
-  if(fprintf(f, "%s %s %s\n",ctime(&curtime), "-", line) < 0) {
+  if((fprintf(f, "%s %s %s\n",ctime(&curtime), "-", line) < 0)) {
     printf("Error writing to log\n");
   }
 }
