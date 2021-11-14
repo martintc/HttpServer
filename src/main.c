@@ -10,6 +10,7 @@
 #include "file_handler.h"
 #include "packet_builder.h"
 #include "packet_parser.h"
+#include "log.h"
 
 #define BUFFER_SIZE 8192
 
@@ -25,6 +26,8 @@ int get_socket () {
   return socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
   #elif __linux__
   return socket(AF_INET, SOCK_STREAM, 6);
+  # elif __APPLE__
+  return socket(PF_INET, SOCK_STREAM, 6);
   #else
   return -1;
   #endif
@@ -45,18 +48,18 @@ void make_server (struct sockaddr_in *server, int port) {
   server->sin_addr.s_addr = htonl(INADDR_ANY);
 }
 
-void handle_client (int *client, char *root_folder) {
+void handle_client (int *client, char *root_folder, FILE* log) {
   char request[BUFFER_SIZE];
   ssize_t recv_message = recv(*client, request, BUFFER_SIZE, 0);
   if (recv_message == -1) {
     return;
   }
   struct packet_request* r = parse_request(request);
-
+  write_to_log(log, r->request_resource);
   if ((strcmp(r->request_resource, "/")) == 0) {
     strcpy(r->request_resource, "/index.html");
   }
-
+  write_to_log(log, r->request_resource);
   char* requested_path = make_full_path(root_folder, r->request_resource);
   //printf("1\n");
 
@@ -76,6 +79,10 @@ void handle_client (int *client, char *root_folder) {
 }
 
 int main (int argc, char *argv[]) {
+
+  // log file path on server
+  char* path = "log.txt";
+
   /* First argument is port, second argument is file root for server  */
   int port;
   // int status; not currently in use
@@ -115,25 +122,28 @@ int main (int argc, char *argv[]) {
   // implement signal handler
   signal(SIGPIPE, handler);
 
+  // open log file
+  //FILE* log = open_log(path);
+
   while (TRUE) {
+    FILE* log = open_append_log(path);
     struct sockaddr_in client_socket;
     socklen_t length = sizeof(struct sockaddr);
-    //printf("waiting on client\n");
     int client = accept(sock, (struct sockaddr *) &client_socket, &length);
-    /* fflush(stdout); */
     if (client < 0) {
-      printf("client error\n");
+      write_to_log(log, "Error for client connecting");
       close(client);
       continue;
     }
-    //printf("CLient connected\n");
-    handle_client(&client, root_folder);
-    //printf("client handled\n");
+    write_to_log(log, "Client connected");
+    handle_client(&client, root_folder, log);
     shutdown(client, SHUT_RDWR);
     close(client);
-    //printf("client closed\n ----------------------------------\n");
+    write_to_log(log, "Client has been handled");
+    close_file(log);
   }
   close(sock);
+  /* close_file(log); */
 
   return 0;
 
