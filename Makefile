@@ -2,7 +2,7 @@ CC = cc
 
 CC_FLAGS=-Wall -g
 
-CC_FLAGS_DEBUG=-Wall -pedantic -g -fsanitize=undefined -fsanitize=address
+CC_FLAGS_DEBUG=-Wall -g -pedantic -fsanitize=undefined -fsanitize=address
 
 compile:
 	make clean
