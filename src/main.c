@@ -26,6 +26,8 @@ int get_socket () {
   return socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
   #elif __linux__
   return socket(AF_INET, SOCK_STREAM, 6);
+  # elif __APPLE__
+  return socket(PF_INET, SOCK_STREAM, 6);
   #else
   return -1;
   #endif
