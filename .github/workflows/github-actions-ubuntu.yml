@@ -1,7 +1,8 @@
 name: Ubuntu build
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - run: make
+      - uses: actions/checkout@v2
+      - run : make
