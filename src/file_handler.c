@@ -4,12 +4,10 @@
 #include <string.h>
 #include "file_handler.h"
 
-char* make_full_path(char *path, char *file) {
-  char* full_path = malloc(sizeof(char) * 128);
-  full_path[0] = '\0';
-  strcpy(full_path, path);
-  strcat(full_path, file);
-  return full_path;
+// TODO: Improve this function not to rely on heap allocations
+void make_full_path(char *dest, char *path, char *file) {
+  strcpy(dest, path);
+  strcat(dest, file);
 }
 
 int check_existence(char *path) {

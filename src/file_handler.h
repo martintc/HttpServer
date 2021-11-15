@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 // create full path from directory path and file
-char* make_full_path(char *path, char *file);
+void make_full_path(char *dest, char *path, char *file);
 
 // check is file exists
 int check_existence(char *path);

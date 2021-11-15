@@ -50,18 +50,25 @@ void make_server (struct sockaddr_in *server, int port) {
 
 void handle_client (int *client, char *root_folder, FILE* log) {
   char request[BUFFER_SIZE];
+  char requested_path[1024];
+  struct packet_request *r = NULL;
+
   ssize_t recv_message = recv(*client, request, BUFFER_SIZE, 0);
+  printf("%s\n", request);
   if (recv_message == -1) {
     return;
   }
-  struct packet_request* r = parse_request(request);
+  r = parse_request(request);
+  if (r == NULL) {
+    printf("Request terminated\n");
+    return;
+  }
   write_to_log(log, r->request_resource);
   if ((strcmp(r->request_resource, "/")) == 0) {
     strcpy(r->request_resource, "/index.html");
   }
   write_to_log(log, r->request_resource);
-  char* requested_path = make_full_path(root_folder, r->request_resource);
-  //printf("1\n");
+  make_full_path(requested_path ,root_folder, r->request_resource);
 
   struct http_packet* packet = make_http_packet(requested_path);
   char* message = get_packet_string(packet);
@@ -74,7 +81,6 @@ void handle_client (int *client, char *root_folder, FILE* log) {
   message = NULL;
   destroy_http_packet(packet);
   destroy_packet(r);
-  free(requested_path);
   return;
 }
 

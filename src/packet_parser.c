@@ -11,7 +11,7 @@ struct packet_request* parse_request(char* message) {
     if (line_token == NULL) {
       break;
     }
-    if ((strcmp("GET", line_token)) == 0) {
+    if (((strcmp("GET", line_token)) == 0) || ((strcmp("HEAD", line_token)) == 0)) {
       strcpy(request->request_method, "GET");
       line_token = strtok(NULL, delim);
       stpcpy(request->request_resource, line_token);

@@ -1,8 +1,8 @@
 CC = cc
 
-CC_FLAGS=-Wall -g
+CC_FLAGS=-Wall -pedantic-errors
 
-CC_FLAGS_DEBUG=-Wall -g -pedantic -fsanitize=undefined -fsanitize=address
+CC_FLAGS_DEBUG=-Wall -g -pedantic-errors -fsanitize=undefined -fsanitize=address
 
 compile:
 	make clean
